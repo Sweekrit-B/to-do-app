@@ -81,3 +81,29 @@ export const removeTask: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateTask: RequestHandler = async (req, res, next) => {
+  const { id } = req.params;
+  const { _id, title, description, isChecked, dateCreated } = req.body;
+
+  const errors = validationResult(req);
+  try {
+    validationErrorParser(errors);
+    if (id === req.body._id) {
+      try {
+        const result = await TaskModel.findByIdAndUpdate(
+          id,
+          { _id, title, description, isChecked, dateCreated },
+          { new: true },
+        );
+        res.status(200).json(result);
+      } catch (error) {
+        return res.status(400).json({ error: "ID in URL and body do not match" });
+      }
+    } else {
+      return res.status(400).json({ error: "ID in URL and body do not match" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

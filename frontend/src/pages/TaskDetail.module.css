@@ -1,0 +1,27 @@
+.taskTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.taskTitle h2 {
+  margin-top: 20px; /* Reset margin to prevent spacing issues */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskTitle Button {
+  margin-top: 20px;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.properties {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}

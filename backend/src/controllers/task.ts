@@ -49,7 +49,7 @@ export const getTask: RequestHandler = async (req, res, next) => {
 export const createTask: RequestHandler = async (req, res, next) => {
   // extract any errors that were found by the validator
   const errors = validationResult(req);
-  const { title, description, isChecked } = req.body;
+  const { title, description, isChecked, assignee } = req.body;
 
   try {
     // if there are errors, then this function throws an exception
@@ -60,11 +60,14 @@ export const createTask: RequestHandler = async (req, res, next) => {
       description: description,
       isChecked: isChecked,
       dateCreated: Date.now(),
+      assignee: assignee,
     });
+
+    const populatedTask = await task.populate("assignee");
 
     // 201 means a new resource has been created successfully
     // the newly created task is sent back to the user
-    res.status(201).json(task);
+    res.status(201).json(populatedTask);
   } catch (error) {
     next(error);
   }
@@ -84,7 +87,7 @@ export const removeTask: RequestHandler = async (req, res, next) => {
 
 export const updateTask: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
-  const { _id, title, description, isChecked, dateCreated } = req.body;
+  const { _id, title, description, isChecked, dateCreated, assignee } = req.body;
 
   const errors = validationResult(req);
   try {
@@ -93,7 +96,7 @@ export const updateTask: RequestHandler = async (req, res, next) => {
       try {
         const result = await TaskModel.findByIdAndUpdate(
           id,
-          { _id, title, description, isChecked, dateCreated },
+          { _id, title, description, isChecked, dateCreated, assignee },
           { new: true },
         );
         res.status(200).json(result);

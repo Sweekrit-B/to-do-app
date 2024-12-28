@@ -1,4 +1,5 @@
 import { get, handleAPIError, post, put } from "src/api/requests";
+//import { getUser } from "src/api/users";
 
 import type { APIResult } from "src/api/requests";
 import type { User } from "src/api/users";
@@ -114,6 +115,8 @@ export async function getAllTasks(): Promise<APIResult<Task[]>> {
 
 export async function updateTask(task: UpdateTaskRequest): Promise<APIResult<Task>> {
   try {
+    //running getUser(task.assignee) because the assignee is a string and we need to convert it to a User object
+    //const newTask = { ...task, assignee: task.assignee ? await getUser(task.assignee) : undefined };
     const response = await put(`/api/task/${task._id}`, task);
     const json = (await response.json()) as TaskJSON;
     return { success: true, data: parseTask(json) };

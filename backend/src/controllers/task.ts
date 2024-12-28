@@ -30,7 +30,7 @@ export const getTask: RequestHandler = async (req, res, next) => {
 
   try {
     // if the ID doesn't exist, then findById returns null
-    const task = await TaskModel.findById(id);
+    const task = await TaskModel.findById(id).populate("assignee");
 
     if (task === null) {
       throw createHttpError(404, "Task not found.");
@@ -98,7 +98,7 @@ export const updateTask: RequestHandler = async (req, res, next) => {
           id,
           { _id, title, description, isChecked, dateCreated, assignee },
           { new: true },
-        );
+        ).populate("assignee");
         res.status(200).json(result);
       } catch (error) {
         return res.status(400).json({ error: "ID in URL and body do not match" });

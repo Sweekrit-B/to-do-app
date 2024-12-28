@@ -5,6 +5,7 @@
   justify-content: flex-start;
   align-items: center;
   column-gap: 0.25rem;
+  border-bottom: 1px solid var(--color-text-secondary);
 }
 
 .item:hover {
@@ -12,7 +13,6 @@
 }
 
 .textContainer {
-  border-bottom: 1px solid var(--color-text-secondary);
   height: 100%;
   flex-grow: 2;
   display: flex;

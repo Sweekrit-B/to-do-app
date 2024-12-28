@@ -22,7 +22,7 @@ export function TaskList({ title }: TaskListProps) {
         }
       })
       .catch((reason) => alert(reason));
-  }, []);
+  }, [tasks]);
 
   return (
     <div className={styles.outerDiv}>
